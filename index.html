@@ -6,422 +6,565 @@
     <title>Football Tracker</title>
     <style>
       :root {
-        --bg: #07130f;
-        --bg-2: #0d2019;
-        --panel: #102a22;
-        --panel-2: #123027;
-        --border: rgba(145, 181, 166, 0.18);
-        --text: #ebf7f1;
-        --muted: #a7c0b3;
-        --green: #2ddf7a;
-        --green-strong: #17b95c;
-        --shadow: 0 18px 45px rgba(2, 10, 8, 0.35);
+        --bg: #0a0e0d;
+        --bg-light: #111514;
+        --card-bg: #151d1a;
+        --border: rgba(100, 160, 140, 0.15);
+        --text: #e8f3f0;
+        --text-muted: #a8c5bf;
+        --accent: #2ddf7a;
+        --accent-dark: #1fa85a;
+        --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
+        --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.4);
       }
 
       * { box-sizing: border-box; }
       html { scroll-behavior: smooth; }
+      
       body {
         margin: 0;
-        font-family: "Inter", Arial, sans-serif;
-        background: radial-gradient(circle at top, rgba(34, 162, 88, 0.18), transparent 25%), linear-gradient(180deg, var(--bg) 0%, #07150f 100%);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+        background: var(--bg);
         color: var(--text);
+        line-height: 1.6;
       }
+
       a { color: inherit; text-decoration: none; }
-      button { font: inherit; }
-      .container { width: min(1200px, calc(100% - 32px)); margin: 0 auto; }
-      .topbar {
+      button { font: inherit; cursor: pointer; }
+      .container { width: min(1160px, calc(100% - 40px)); margin: 0 auto; }
+
+      /* Header */
+      .header {
+        background: var(--bg-light);
+        border-bottom: 1px solid var(--border);
         position: sticky;
         top: 0;
-        z-index: 20;
-        background: rgba(7, 19, 15, 0.72);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid var(--border);
+        z-index: 50;
       }
-      .nav {
+
+      .header-inner {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        min-height: 76px;
+        height: 64px;
       }
-      .brand {
+
+      .logo {
         display: flex;
         align-items: center;
-        gap: 12px;
-        font-weight: 700;
-        letter-spacing: 0.02em;
+        gap: 10px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        letter-spacing: 0.5px;
       }
-      .brand-mark {
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        width: 34px;
-        height: 34px;
-        border-radius: 10px;
-        background: linear-gradient(180deg, #39e47f, #1f9b57);
-        color: #06150d;
-        box-shadow: var(--shadow);
+
+      .logo-mark {
+        width: 32px;
+        height: 32px;
+        background: linear-gradient(135deg, #2ddf7a, #1fa85a);
+        border-radius: 8px;
+        display: grid;
+        place-items: center;
+        font-size: 1.4rem;
       }
+
       nav {
         display: flex;
-        gap: 26px;
-        color: var(--muted);
-      }
-      .cta, .filter-btn {
-        border: 0;
-        background: linear-gradient(180deg, var(--green) 0%, var(--green-strong) 100%);
-        color: #062112;
-        padding: 0.8rem 1.15rem;
-        border-radius: 12px;
-        font-weight: 700;
-        cursor: pointer;
-        box-shadow: 0 12px 25px rgba(28, 199, 96, 0.24);
-      }
-      .hero { padding: 72px 0 48px; }
-      .hero-inner {
-        display: grid;
-        grid-template-columns: 1.3fr 0.7fr;
         gap: 32px;
+        font-size: 0.95rem;
+        color: var(--text-muted);
+      }
+
+      nav a {
+        transition: color 0.2s;
+      }
+
+      nav a:hover {
+        color: var(--accent);
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: #06150d;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        border: none;
+        transition: all 0.2s;
+      }
+
+      .btn-primary:hover {
+        background: var(--accent-dark);
+        transform: translateY(-1px);
+        box-shadow: 0 8px 16px rgba(45, 223, 122, 0.2);
+      }
+
+      /* Hero */
+      .hero {
+        padding: 80px 0 60px;
+        background: linear-gradient(180deg, rgba(45, 223, 122, 0.03) 0%, transparent 100%);
+      }
+
+      .hero-content {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 48px;
         align-items: center;
       }
-      .eyebrow {
-        margin: 0 0 12px;
-        color: var(--green);
-        font-size: 0.75rem;
+
+      .hero-text h1 {
+        margin: 0 0 16px;
+        font-size: clamp(2.2rem, 6vw, 3.8rem);
+        line-height: 1.15;
         font-weight: 700;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
+        letter-spacing: -1px;
       }
-      h1 {
-        margin: 0;
-        font-size: clamp(2.5rem, 5vw, 4.3rem);
-        line-height: 1.05;
-        letter-spacing: -0.04em;
-      }
-      .subtext {
-        max-width: 620px;
-        color: var(--muted);
-        font-size: 1.05rem;
-        margin-top: 18px;
+
+      .hero-text p {
+        margin: 0 0 24px;
+        font-size: 1.1rem;
+        color: var(--text-muted);
         line-height: 1.7;
       }
+
       .hero-stats {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 22px;
-        margin-top: 30px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
       }
-      .stat {
-        min-width: 120px;
-        padding: 18px 20px;
-        background: rgba(255,255,255,0.02);
+
+      .stat-box {
+        padding: 20px;
+        background: var(--card-bg);
         border: 1px solid var(--border);
-        border-radius: 18px;
+        border-radius: 12px;
+        text-align: center;
       }
-      .stat strong {
+
+      .stat-box strong {
         display: block;
         font-size: 1.8rem;
         margin-bottom: 6px;
       }
-      .stat span { color: var(--muted); }
+
+      .stat-box span {
+        display: block;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
       .hero-card {
-        background: linear-gradient(180deg, rgba(18,42,34,0.95), rgba(17,32,26,0.9));
+        background: var(--card-bg);
         border: 1px solid var(--border);
-        border-radius: 28px;
-        padding: 24px;
-        box-shadow: var(--shadow);
-      }
-      .card-top {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        color: var(--muted);
-        font-size: 0.8rem;
-        margin-bottom: 18px;
-      }
-      .chip {
-        border-radius: 999px;
-        padding: 0.35rem 0.6rem;
-        font-weight: 700;
-        font-size: 0.72rem;
-      }
-      .chip.success {
-        background: rgba(45, 223, 122, 0.15);
-        color: var(--green);
-      }
-      .leader-team {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        padding: 14px 0 18px;
-      }
-      .badge {
-        width: 52px;
-        height: 52px;
-        display: grid;
-        place-items: center;
         border-radius: 16px;
-        font-weight: 800;
-        background: linear-gradient(180deg, #0d5d3a, #0a3d2b);
-        color: #eafff1;
+        padding: 28px;
+        box-shadow: var(--shadow-md);
       }
-      .badge-1 {
-        background: linear-gradient(180deg, #d9ba6d, #a77b1f);
-        color: #1b1203;
-      }
-      .leader-team h3 { margin: 0; font-size: 1.5rem; }
-      .leader-team p { margin: 6px 0 0; color: var(--muted); }
-      .mini-table {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: grid;
-        gap: 10px;
-        border-top: 1px solid var(--border);
-        padding-top: 18px;
-      }
-      .mini-table li {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        color: var(--muted);
-      }
-      .mini-table strong { color: var(--text); }
-      .section { padding: 32px 0 54px; }
-      .section.muted {
-        background: rgba(10, 22, 18, 0.35);
-        border-top: 1px solid var(--border);
-        border-bottom: 1px solid var(--border);
-      }
-      .section-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 24px;
-      }
-      .section-header h2 {
-        margin: 0;
-        font-size: clamp(1.7rem, 2vw, 2.6rem);
-      }
-      .table-wrap {
-        overflow-x: auto;
-        border: 1px solid var(--border);
-        background: rgba(12,25,20,0.8);
-        border-radius: 22px;
-        box-shadow: var(--shadow);
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        min-width: 760px;
-      }
-      thead th {
-        padding: 18px 14px;
-        background: rgba(255,255,255,0.02);
-        color: var(--muted);
-        font-weight: 600;
+
+      .hero-card-label {
         font-size: 0.8rem;
-        text-align: left;
-        letter-spacing: 0.04em;
+        color: var(--text-muted);
         text-transform: uppercase;
+        letter-spacing: 0.8px;
+        margin-bottom: 20px;
       }
-      tbody td {
-        padding: 16px 14px;
-        border-top: 1px solid var(--border);
-        color: var(--text);
-        font-size: 0.96rem;
-      }
-      tbody tr:hover { background: rgba(255,255,255,0.02); }
-      .team-name {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        font-weight: 600;
-      }
-      .team-logo {
-        width: 30px;
-        height: 30px;
-        border-radius: 8px;
-        display: grid;
-        place-items: center;
-        font-size: 0.72rem;
-        font-weight: 800;
-        color: #06150d;
-      }
-      .team-link {
-        color: var(--text);
-        text-decoration: none;
-      }
-      .team-link:hover { text-decoration: underline; }
-      .team-1 { background: #d0d6de; }
-      .team-2 { background: #f3c76d; }
-      .team-3 { background: #9ec7ff; }
-      .team-4 { background: #ffaecf; }
-      .team-5 { background: #7fe7ce; }
-      .team-6 { background: #ff9e63; }
-      .team-7 { background: #e5c2ff; }
-      .team-8 { background: #86d3ff; }
-      .team-9 { background: #b7d15d; }
-      .team-10 { background: #ffd65a; }
-      .team-11 { background: #ff9b9b; }
-      .team-12 { background: #8fe8a6; }
-      .team-13 { background: #c9d8ff; }
-      .team-14 { background: #f0b7ff; }
-      .team-15 { background: #8ad7d5; }
-      .team-16 { background: #ffca72; }
-      .team-17 { background: #b2c6ff; }
-      .team-18 { background: #92d986; }
-      .team-19 { background: #ffba93; }
-      .team-20 { background: #d8d5ff; }
-      .fixtures-grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 22px;
-      }
-      .fixture-card, .result-card, .live-card {
-        background: rgba(13, 32, 25, 0.92);
-        border: 1px solid var(--border);
-        border-radius: 22px;
-        padding: 20px;
-        box-shadow: var(--shadow);
-      }
-      .match-date {
-        margin: 0 0 18px;
-        color: var(--muted);
-        font-size: 0.8rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
-      .match-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-      }
-      .team-breakdown {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        min-width: 0;
-        flex: 1;
-      }
-      .team-breakdown strong { font-size: 0.96rem; }
-      .fixture-card .match-row + .match-row { margin-top: 14px; }
-      .fixture-meta {
-        margin-top: 18px;
-        padding-top: 16px;
-        border-top: 1px solid var(--border);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        color: var(--muted);
-        font-size: 0.8rem;
-      }
-      .tag {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0.4rem 0.7rem;
-        border-radius: 999px;
-        font-size: 0.7rem;
-        font-weight: 700;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-      }
-      .tag.live { background: rgba(255, 94, 94, 0.14); color: #ff7b7b; }
-      .tag.upcoming { background: rgba(45, 223, 122, 0.14); color: var(--green); }
-      .tag.final { background: rgba(200, 200, 200, 0.14); color: #b0b0b0; }
-      .results-list, .live-list { display: grid; gap: 18px; }
-      .result-card, .live-card {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 22px;
-      }
-      .result-left, .live-left {
-        display: flex;
-        align-items: center;
-        gap: 18px;
-        flex: 1;
-      }
-      .score {
+
+      .leader {
         display: flex;
         align-items: center;
         gap: 16px;
+        margin-bottom: 20px;
+      }
+
+      .leader-badge {
+        width: 56px;
+        height: 56px;
+        background: linear-gradient(135deg, #d9ba6d, #a77b1f);
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
         font-weight: 800;
-        font-size: 1.5rem;
-        letter-spacing: -0.03em;
+        font-size: 1.4rem;
+        color: #1b1203;
       }
-      .score small {
-        color: var(--muted);
+
+      .leader h3 {
+        margin: 0;
+        font-size: 1.3rem;
+      }
+
+      .leader p {
+        margin: 4px 0 0;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+      }
+
+      .leader-stats {
+        display: grid;
+        gap: 12px;
+        border-top: 1px solid var(--border);
+        padding-top: 16px;
+        margin-top: 16px;
+      }
+
+      .stat-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.95rem;
+      }
+
+      .stat-row span:last-child {
+        font-weight: 600;
+        color: var(--accent);
+      }
+
+      /* Section */
+      .section {
+        padding: 64px 0;
+      }
+
+      .section.alt {
+        background: var(--bg-light);
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .section-header {
+        margin-bottom: 32px;
+      }
+
+      .section-label {
         font-size: 0.8rem;
-        letter-spacing: 0.06em;
+        color: var(--accent);
         text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 600;
+        margin-bottom: 8px;
       }
-      .result-copy, .live-copy {
+
+      .section-title {
+        margin: 0;
+        font-size: 2.2rem;
+        font-weight: 700;
+      }
+
+      /* Table */
+      .table-container {
+        overflow-x: auto;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        box-shadow: var(--shadow-md);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.95rem;
+      }
+
+      thead {
+        background: rgba(45, 223, 122, 0.05);
+        border-bottom: 2px solid var(--border);
+      }
+
+      th {
+        padding: 16px 12px;
+        text-align: left;
+        font-weight: 600;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.5px;
+      }
+
+      td {
+        padding: 14px 12px;
+        border-top: 1px solid var(--border);
+      }
+
+      tbody tr:hover {
+        background: rgba(45, 223, 122, 0.03);
+      }
+
+      .team-cell {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 500;
+      }
+
+      .team-badge {
+        width: 28px;
+        height: 28px;
+        border-radius: 6px;
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+        font-size: 0.7rem;
+        color: #06150d;
+      }
+
+      .team-link {
+        color: var(--text);
+        transition: color 0.2s;
+      }
+
+      .team-link:hover {
+        color: var(--accent);
+      }
+
+      .badge-1 { background: #d0d6de; }
+      .badge-2 { background: #f3c76d; }
+      .badge-3 { background: #9ec7ff; }
+      .badge-4 { background: #ffaecf; }
+      .badge-5 { background: #7fe7ce; }
+      .badge-6 { background: #ff9e63; }
+      .badge-7 { background: #e5c2ff; }
+      .badge-8 { background: #86d3ff; }
+      .badge-9 { background: #b7d15d; }
+      .badge-10 { background: #ffd65a; }
+      .badge-11 { background: #ff9b9b; }
+      .badge-12 { background: #8fe8a6; }
+      .badge-13 { background: #c9d8ff; }
+      .badge-14 { background: #f0b7ff; }
+      .badge-15 { background: #8ad7d5; }
+      .badge-16 { background: #ffca72; }
+      .badge-17 { background: #b2c6ff; }
+      .badge-18 { background: #92d986; }
+      .badge-19 { background: #ffba93; }
+      .badge-20 { background: #d8d5ff; }
+
+      .stat-cell {
+        text-align: right;
+        color: var(--text-muted);
+      }
+
+      .stat-cell.highlight {
+        color: var(--accent);
+        font-weight: 600;
+      }
+
+      /* Live & Fixtures Grid */
+      .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 20px;
+      }
+
+      .match-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 24px;
+        transition: all 0.2s;
+      }
+
+      .match-card:hover {
+        border-color: var(--accent);
+        box-shadow: var(--shadow-md);
+      }
+
+      .match-date {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 16px;
+      }
+
+      .match-teams {
         display: flex;
         flex-direction: column;
-        gap: 6px;
+        gap: 12px;
+        margin-bottom: 16px;
       }
-      .result-copy h3, .live-copy h3 { margin: 0; font-size: 1.1rem; }
-      .result-copy p, .live-copy p {
-        margin: 0;
-        color: var(--muted);
-        font-size: 0.9rem;
+
+      .match-team {
+        display: flex;
+        align-items: center;
+        gap: 12px;
       }
+
+      .match-team strong {
+        flex: 1;
+      }
+
+      .match-score {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--accent);
+        text-align: center;
+        min-width: 40px;
+      }
+
+      .match-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 12px;
+        border-top: 1px solid var(--border);
+        font-size: 0.85rem;
+      }
+
+      .match-time {
+        color: var(--text-muted);
+      }
+
+      .tag {
+        display: inline-flex;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .tag-upcoming {
+        background: rgba(45, 223, 122, 0.15);
+        color: var(--accent);
+      }
+
+      .tag-live {
+        background: rgba(255, 94, 94, 0.15);
+        color: #ff7b7b;
+      }
+
+      .tag-final {
+        background: rgba(168, 168, 168, 0.15);
+        color: #a8a8a8;
+      }
+
       .live-indicator {
         display: flex;
         align-items: center;
         gap: 6px;
+        font-weight: 600;
         color: #ff7b7b;
-        font-weight: 700;
       }
-      .live-dot {
-        width: 8px;
-        height: 8px;
+
+      .pulse {
+        width: 6px;
+        height: 6px;
         border-radius: 50%;
         background: #ff7b7b;
         animation: pulse 1.5s infinite;
       }
-      @keyframes pulse { 0%,100% { opacity:1 } 50% { opacity:0.3 } }
+
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.4; }
+      }
+
       .watch-btn {
-        border: 1px solid var(--green);
         background: transparent;
-        color: var(--green);
-        padding: 0.6rem 1rem;
-        border-radius: 8px;
+        border: 1px solid var(--accent);
+        color: var(--accent);
+        padding: 8px 14px;
+        border-radius: 6px;
         font-weight: 600;
-        cursor: pointer;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         transition: all 0.2s;
       }
+
       .watch-btn:hover {
-        background: var(--green);
-        color: #062112;
+        background: var(--accent);
+        color: #06150d;
       }
+
+      /* Results */
+      .results-list {
+        display: grid;
+        gap: 16px;
+      }
+
+      .result-item {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+      }
+
+      .result-score-box {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        flex-shrink: 0;
+      }
+
+      .result-teams {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .result-team {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 500;
+      }
+
+      .result-score {
+        text-align: center;
+        min-width: 48px;
+        font-size: 1.5rem;
+        font-weight: 700;
+      }
+
+      .result-score-small {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+      }
+
+      .result-details {
+        flex: 1;
+      }
+
+      .result-details h4 {
+        margin: 0 0 4px;
+        font-size: 0.95rem;
+      }
+
+      .result-details p {
+        margin: 0;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+      }
+
+      /* Responsive */
       @media (max-width: 900px) {
-        .hero-inner, .fixtures-grid { grid-template-columns: 1fr; }
+        .hero-content { grid-template-columns: 1fr; }
+        .hero-stats { grid-template-columns: repeat(2, 1fr); }
+        .cards-grid { grid-template-columns: 1fr; }
         nav { display: none; }
-        .section-header {
-          align-items: flex-start;
-          flex-direction: column;
-          gap: 14px;
-        }
+        .result-item { flex-direction: column; align-items: flex-start; }
       }
-      @media (max-width: 560px) {
-        .topbar { position: static; }
-        .nav { padding: 14px 0; }
-        .cta { display: none; }
-        .hero { padding-top: 42px; }
-        .result-card, .live-card { flex-direction: column; align-items: flex-start; }
-        .score { font-size: 1.2rem; }
+
+      @media (max-width: 600px) {
+        .container { width: calc(100% - 20px); }
+        .hero { padding: 40px 0; }
+        .section { padding: 40px 0; }
+        .section-title { font-size: 1.6rem; }
+        .hero-text h1 { font-size: 1.8rem; }
+        .hero-stats { grid-template-columns: 1fr; }
+        .header-inner { height: 56px; }
+        nav { gap: 16px; font-size: 0.85rem; }
       }
     </style>
   </head>
   <body>
-    <header class="topbar">
-      <div class="container nav">
-        <div class="brand">
-          <span class="brand-mark">⚽</span>
+    <header class="header">
+      <div class="container header-inner">
+        <div class="logo">
+          <div class="logo-mark">⚽</div>
           <span>Football Tracker</span>
         </div>
         <nav>
@@ -431,52 +574,55 @@
           <a href="#fixtures">Fixtures</a>
           <a href="#results">Results</a>
         </nav>
-        <button class="cta">Follow League</button>
+        <button class="btn-primary">Follow</button>
       </div>
     </header>
 
     <main>
       <section class="hero">
-        <div class="container hero-inner">
+        <div class="container hero-content">
           <div class="hero-text">
-            <p class="eyebrow">Season 2026/27</p>
-            <h1>Track the title race, fixtures, and league table.</h1>
-            <p class="subtext">
-              Follow every club, every fixture, and every result from the football season in one complete dashboard.
-            </p>
+            <h1>Track every match, every goal</h1>
+            <p>Stay updated with live scores, league standings, and team profiles for the complete football season.</p>
             <div class="hero-stats">
-              <div class="stat">
+              <div class="stat-box">
                 <strong>20</strong>
                 <span>Teams</span>
               </div>
-              <div class="stat">
+              <div class="stat-box">
                 <strong>38</strong>
                 <span>Matchdays</span>
               </div>
-              <div class="stat">
+              <div class="stat-box">
                 <strong>15</strong>
-                <span>Games this week</span>
+                <span>This Week</span>
               </div>
             </div>
           </div>
 
           <div class="hero-card">
-            <div class="card-top">
-              <span>League Leaders</span>
-              <span class="chip success">+2 pts</span>
-            </div>
-            <div class="leader-team">
-              <div class="badge badge-1">M</div>
+            <div class="hero-card-label">League Leaders</div>
+            <div class="leader">
+              <div class="leader-badge">M</div>
               <div>
                 <h3>Manchester City</h3>
                 <p>27 played • 19 wins</p>
               </div>
             </div>
-            <ul class="mini-table">
-              <li><span>Pts</span><strong>62</strong></li>
-              <li><span>GD</span><strong>+28</strong></li>
-              <li><span>Form</span><strong>WWDWL</strong></li>
-            </ul>
+            <div class="leader-stats">
+              <div class="stat-row">
+                <span>Points</span>
+                <span>62</span>
+              </div>
+              <div class="stat-row">
+                <span>Goal Diff</span>
+                <span>+28</span>
+              </div>
+              <div class="stat-row">
+                <span>Form</span>
+                <span>W W D W L</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -484,26 +630,23 @@
       <section class="section" id="table">
         <div class="container">
           <div class="section-header">
-            <div>
-              <p class="eyebrow">Standings</p>
-              <h2>League Table</h2>
-            </div>
-            <button class="filter-btn">Full Table</button>
+            <div class="section-label">Standings</div>
+            <h2 class="section-title">League Table</h2>
           </div>
-          <div class="table-wrap">
+          <div class="table-container">
             <table>
               <thead>
                 <tr>
-                  <th>#</th>
+                  <th style="width: 5%">#</th>
                   <th>Club</th>
-                  <th>P</th>
-                  <th>W</th>
-                  <th>D</th>
-                  <th>L</th>
-                  <th>GF</th>
-                  <th>GA</th>
-                  <th>GD</th>
-                  <th>Pts</th>
+                  <th style="width: 6%">P</th>
+                  <th style="width: 6%">W</th>
+                  <th style="width: 6%">D</th>
+                  <th style="width: 6%">L</th>
+                  <th style="width: 6%">GF</th>
+                  <th style="width: 6%">GA</th>
+                  <th style="width: 6%">GD</th>
+                  <th style="width: 8%">Pts</th>
                 </tr>
               </thead>
               <tbody id="table-body"></tbody>
@@ -512,40 +655,31 @@
         </div>
       </section>
 
-      <section class="section muted" id="live">
+      <section class="section alt" id="live">
         <div class="container">
           <div class="section-header">
-            <div>
-              <p class="eyebrow">Watch Live</p>
-              <h2>Live Matches</h2>
-            </div>
-            <button class="filter-btn">Now Playing</button>
+            <div class="section-label">Watch Now</div>
+            <h2 class="section-title">Live Matches</h2>
           </div>
-          <div id="live-list" class="live-list"></div>
+          <div id="live-list" class="cards-grid"></div>
         </div>
       </section>
 
-      <section class="section muted" id="fixtures">
+      <section class="section" id="fixtures">
         <div class="container">
           <div class="section-header">
-            <div>
-              <p class="eyebrow">Upcoming</p>
-              <h2>Fixtures</h2>
-            </div>
-            <button class="filter-btn">This Week</button>
+            <div class="section-label">Upcoming</div>
+            <h2 class="section-title">Fixtures</h2>
           </div>
-          <div id="fixtures-grid" class="fixtures-grid"></div>
+          <div id="fixtures-grid" class="cards-grid"></div>
         </div>
       </section>
 
-      <section class="section" id="results">
+      <section class="section alt" id="results">
         <div class="container">
           <div class="section-header">
-            <div>
-              <p class="eyebrow">Latest</p>
-              <h2>All Results</h2>
-            </div>
-            <button class="filter-btn">All Games</button>
+            <div class="section-label">Latest</div>
+            <h2 class="section-title">Results</h2>
           </div>
           <div id="results-list" class="results-list"></div>
         </div>
@@ -582,9 +716,7 @@
         { date: "Mon 20 May", home: "Tottenham", away: "Newcastle", time: "20:00" },
         { date: "Tue 21 May", home: "Manchester United", away: "Aston Villa", time: "19:45" },
         { date: "Wed 22 May", home: "Brighton", away: "West Ham", time: "18:00" },
-        { date: "Thu 23 May", home: "Leicester City", away: "Crystal Palace", time: "20:30" },
-        { date: "Fri 24 May", home: "Bournemouth", away: "Fulham", time: "19:00" },
-        { date: "Sat 25 May", home: "Everton", away: "Leeds United", time: "15:00" }
+        { date: "Thu 23 May", home: "Leicester City", away: "Crystal Palace", time: "20:30" }
       ];
 
       const liveMatches = [
@@ -601,147 +733,130 @@
         { home: "Brighton", away: "Chelsea", homeGoals: 2, awayGoals: 2, date: "May 12", venue: "Amex Stadium" },
         { home: "West Ham", away: "Leicester City", homeGoals: 1, awayGoals: 1, date: "May 11", venue: "London Stadium" },
         { home: "Fulham", away: "Everton", homeGoals: 2, awayGoals: 1, date: "May 10", venue: "Craven Cottage" },
-        { home: "Southampton", away: "Wolves", homeGoals: 0, awayGoals: 2, date: "May 9", venue: "St Mary's" },
-        { home: "Crystal Palace", away: "Brighton", homeGoals: 1, awayGoals: 1, date: "May 8", venue: "Selhurst Park" },
-        { home: "Nottingham Forest", away: "Leeds United", homeGoals: 3, awayGoals: 1, date: "May 7", venue: "City Ground" },
-        { home: "Bournemouth", away: "Newcastle", homeGoals: 0, awayGoals: 2, date: "May 6", venue: "Vitality Stadium" },
-        { home: "Ipswich Town", away: "Liverpool", homeGoals: 0, awayGoals: 4, date: "May 5", venue: "Portman Road" }
+        { home: "Southampton", away: "Wolves", homeGoals: 0, awayGoals: 2, date: "May 9", venue: "St Mary's" }
       ];
 
-      function getTeamBadgeClass(teamName) {
-        const index = clubs.findIndex(c => c.name === teamName);
-        return `team-${(index % 20) + 1}`;
+      function getBadgeClass(name) {
+        const index = clubs.findIndex(c => c.name === name);
+        return `badge-${(index % 20) + 1}`;
       }
 
-      function getTeamBadge(teamName) {
-        const team = clubs.find(c => c.name === teamName);
-        return team ? team.badge : "?";
+      function getBadge(name) {
+        const club = clubs.find(c => c.name === name);
+        return club ? club.badge : "?";
       }
 
       function renderTable() {
         const tbody = document.getElementById("table-body");
         const sorted = [...clubs].sort((a, b) => b.pts - a.pts || b.gd - a.gd);
 
-        tbody.innerHTML = sorted.map((club, index) => {
-          const badgeClass = `team-${(index % 20) + 1}`;
-          const teamUrl = `team.html?team=${encodeURIComponent(club.name)}`;
+        tbody.innerHTML = sorted.map((club, idx) => {
+          const url = `team.html?team=${encodeURIComponent(club.name)}`;
           return `
             <tr>
-              <td>${index + 1}</td>
+              <td>${idx + 1}</td>
               <td>
-                <div class="team-name">
-                  <span class="team-logo ${badgeClass}">${club.badge}</span>
-                  <a class="team-link" href="${teamUrl}">${club.name}</a>
+                <div class="team-cell">
+                  <span class="team-badge ${getBadgeClass(club.name)}">${club.badge}</span>
+                  <a class="team-link" href="${url}">${club.name}</a>
                 </div>
               </td>
-              <td>${club.played}</td>
-              <td>${club.wins}</td>
-              <td>${club.draws}</td>
-              <td>${club.losses}</td>
-              <td>${club.gf}</td>
-              <td>${club.ga}</td>
-              <td>${club.gd > 0 ? "+" : ""}${club.gd}</td>
-              <td><strong>${club.pts}</strong></td>
+              <td class="stat-cell">${club.played}</td>
+              <td class="stat-cell">${club.wins}</td>
+              <td class="stat-cell">${club.draws}</td>
+              <td class="stat-cell">${club.losses}</td>
+              <td class="stat-cell">${club.gf}</td>
+              <td class="stat-cell">${club.ga}</td>
+              <td class="stat-cell">${club.gd > 0 ? '+' : ''}${club.gd}</td>
+              <td class="stat-cell highlight">${club.pts}</td>
             </tr>
           `;
         }).join("");
       }
 
-      function renderLiveMatches() {
+      function renderLive() {
         const list = document.getElementById("live-list");
-        list.innerHTML = liveMatches.map((match) => `
-          <article class="live-card">
-            <div class="live-left">
-              <div class="score">
-                <div style="text-align: center;">
-                  <div style="font-size: 0.9rem; margin-bottom: 4px;">
-                    <span class="team-logo ${getTeamBadgeClass(match.home)}" style="display: inline-flex; margin-right: 8px;">${getTeamBadge(match.home)}</span>
-                    <strong>${match.home}</strong>
-                  </div>
-                  <div style="font-size: 1.8rem; font-weight: 800; margin: 4px 0;">${match.homeGoals}</div>
-                </div>
-                <small>vs</small>
-                <div style="text-align: center;">
-                  <div style="font-size: 1.8rem; font-weight: 800; margin: 4px 0;">${match.awayGoals}</div>
-                  <div style="font-size: 0.9rem; margin-top: 4px;">
-                    <strong>${match.away}</strong>
-                    <span class="team-logo ${getTeamBadgeClass(match.away)}" style="display: inline-flex; margin-left: 8px;">${getTeamBadge(match.away)}</span>
-                  </div>
-                </div>
+        list.innerHTML = liveMatches.map(m => `
+          <div class="match-card">
+            <div class="match-date">${m.venue}</div>
+            <div class="match-teams">
+              <div class="match-team">
+                <span class="team-badge ${getBadgeClass(m.home)}">${getBadge(m.home)}</span>
+                <strong>${m.home}</strong>
+                <span class="match-score">${m.homeGoals}</span>
               </div>
-              <div class="live-copy">
-                <h3>${match.home} vs ${match.away}</h3>
-                <p>${match.venue}</p>
-                <div class="live-indicator">
-                  <span class="live-dot"></span>
-                  <span>${match.minute}'</span>
-                </div>
+              <div class="match-team">
+                <span class="team-badge ${getBadgeClass(m.away)}">${getBadge(m.away)}</span>
+                <strong>${m.away}</strong>
+                <span class="match-score">${m.awayGoals}</span>
               </div>
             </div>
-            <button class="watch-btn">Watch Live</button>
-          </article>
+            <div class="match-footer">
+              <div class="live-indicator">
+                <span class="pulse"></span>
+                ${m.minute}'
+              </div>
+              <button class="watch-btn">Watch</button>
+            </div>
+          </div>
         `).join("");
       }
 
       function renderFixtures() {
         const grid = document.getElementById("fixtures-grid");
-        grid.innerHTML = fixtures.map((fixture) => `
-          <article class="fixture-card">
-            <p class="match-date">${fixture.date}</p>
-            <div class="match-row">
-              <div class="team-breakdown">
-                <span class="team-logo ${getTeamBadgeClass(fixture.home)}">${getTeamBadge(fixture.home)}</span>
-                <div><strong>${fixture.home}</strong></div>
+        grid.innerHTML = fixtures.map(f => `
+          <div class="match-card">
+            <div class="match-date">${f.date}</div>
+            <div class="match-teams">
+              <div class="match-team">
+                <span class="team-badge ${getBadgeClass(f.home)}">${getBadge(f.home)}</span>
+                <strong>${f.home}</strong>
+              </div>
+              <div class="match-team">
+                <span class="team-badge ${getBadgeClass(f.away)}">${getBadge(f.away)}</span>
+                <strong>${f.away}</strong>
               </div>
             </div>
-            <div class="match-row">
-              <div class="team-breakdown">
-                <span class="team-logo ${getTeamBadgeClass(fixture.away)}">${getTeamBadge(fixture.away)}</span>
-                <div><strong>${fixture.away}</strong></div>
-              </div>
+            <div class="match-footer">
+              <span class="match-time">${f.time}</span>
+              <span class="tag tag-upcoming">Upcoming</span>
             </div>
-            <div class="fixture-meta">
-              <span>${fixture.time}</span>
-              <span class="tag upcoming">Upcoming</span>
-            </div>
-          </article>
+          </div>
         `).join("");
       }
 
       function renderResults() {
         const list = document.getElementById("results-list");
-        list.innerHTML = results.map((result) => `
-          <article class="result-card">
-            <div class="result-left">
-              <div class="score">
-                <div style="text-align: center;">
-                  <div style="font-size: 0.9rem; margin-bottom: 4px;">
-                    <span class="team-logo ${getTeamBadgeClass(result.home)}" style="display: inline-flex; margin-right: 8px;">${getTeamBadge(result.home)}</span>
-                    <strong>${result.home}</strong>
-                  </div>
-                  <div style="font-size: 1.8rem; font-weight: 800; margin: 4px 0;">${result.homeGoals}</div>
+        list.innerHTML = results.map(r => `
+          <div class="result-item">
+            <div class="result-score-box">
+              <div class="result-teams">
+                <div class="result-team">
+                  <span class="team-badge ${getBadgeClass(r.home)}">${getBadge(r.home)}</span>
+                  <strong>${r.home}</strong>
                 </div>
-                <small>FT</small>
-                <div style="text-align: center;">
-                  <div style="font-size: 1.8rem; font-weight: 800; margin: 4px 0;">${result.awayGoals}</div>
-                  <div style="font-size: 0.9rem; margin-top: 4px;">
-                    <strong>${result.away}</strong>
-                    <span class="team-logo ${getTeamBadgeClass(result.away)}" style="display: inline-flex; margin-left: 8px;">${getTeamBadge(result.away)}</span>
-                  </div>
+                <div class="result-team">
+                  <span class="team-badge ${getBadgeClass(r.away)}">${getBadge(r.away)}</span>
+                  <strong>${r.away}</strong>
                 </div>
               </div>
-              <div class="result-copy">
-                <h3>${result.home} vs ${result.away}</h3>
-                <p>${result.date} • ${result.venue}</p>
+              <div class="result-score">
+                ${r.homeGoals}<br>
+                <span class="result-score-small">FT</span><br>
+                ${r.awayGoals}
               </div>
             </div>
-            <span class="tag final">Final</span>
-          </article>
+            <div class="result-details">
+              <h4>${r.home} vs ${r.away}</h4>
+              <p>${r.date} • ${r.venue}</p>
+            </div>
+            <span class="tag tag-final">Final</span>
+          </div>
         `).join("");
       }
 
       renderTable();
-      renderLiveMatches();
+      renderLive();
       renderFixtures();
       renderResults();
     </script>
