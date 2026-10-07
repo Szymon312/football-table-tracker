@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Team Profile | Football Tracker</title>
+    <style>
+      :root {
+        --bg: #07130f;
+        --text: #ebf7f1;
+        --muted: #a7c0b3;
+        --green: #2ddf7a;
+        --green-strong: #17b95c;
+        --border: rgba(145, 181, 166, 0.18);
+        --shadow: 0 18px 45px rgba(2, 10, 8, 0.35);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Inter", Arial, sans-serif;
+        background: radial-gradient(circle at top, rgba(34, 162, 88, 0.18), transparent 25%), linear-gradient(180deg, #07130f 0%, #07150f 100%);
+        color: var(--text);
+      }
+      a { color: inherit; text-decoration: none; }
+      .container { width: min(1200px, calc(100% - 32px)); margin: 0 auto; }
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        background: rgba(7, 19, 15, 0.72);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 76px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 700;
+      }
+      .brand-mark {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        background: linear-gradient(180deg, #39e47f, #1f9b57);
+        color: #06150d;
+      }
+      nav {
+        display: flex;
+        gap: 24px;
+        color: var(--muted);
+      }
+      .page {
+        padding: 42px 0 60px;
+      }
+      .team-hero {
+        display: grid;
+        grid-template-columns: 170px 1fr 220px;
+        gap: 24px;
+        background: rgba(13, 32, 25, 0.92);
+        border: 1px solid var(--border);
+        border-radius: 26px;
+        padding: 28px;
+        box-shadow: var(--shadow);
+      }
+      .team-badge {
+        width: 150px;
+        height: 150px;
+        border-radius: 28px;
+        display: grid;
+        place-items: center;
+        font-size: 3rem;
+        font-weight: 900;
+        color: #06150d;
+      }
+      .team-meta h1 { margin: 0 0 10px; font-size: clamp(2rem, 5vw, 3.2rem); }
+      .team-meta p { margin: 0; color: var(--muted); }
+      .team-stats {
+        display: grid;
+        gap: 12px;
+      }
+      .mini-card {
+        background: rgba(255,255,255,0.02);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 14px 16px;
+      }
+      .mini-card span { display: block; color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; }
+      .mini-card strong { font-size: 1.35rem; }
+      .panel {
+        margin-top: 28px;
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 24px;
+      }
+      .box {
+        background: rgba(13, 32, 25, 0.92);
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        padding: 22px;
+        box-shadow: var(--shadow);
+      }
+      .box h2 {
+        margin: 0 0 16px;
+        font-size: 1.5rem;
+      }
+      .squad-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 12px;
+      }
+      .squad-list li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 14px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: rgba(255,255,255,0.01);
+      }
+      .squad-list small { color: var(--muted); }
+      .form {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .result-pill {
+        display: inline-flex;
+        min-width: 34px;
+        height: 34px;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        font-weight: 700;
+      }
+      .win { background: rgba(45, 223, 122, 0.15); color: var(--green); }
+      .draw { background: rgba(255, 255, 255, 0.08); color: #d7e2da; }
+      .loss { background: rgba(255, 94, 94, 0.14); color: #ff8b8b; }
+      .back-link {
+        display: inline-block;
+        margin-top: 24px;
+        padding: 0.75rem 1rem;
+        border-radius: 10px;
+        background: rgba(45, 223, 122, 0.1);
+        border: 1px solid rgba(45, 223, 122, 0.35);
+        color: var(--green);
+        font-weight: 700;
+      }
+      .team-1 { background: #d0d6de; }
+      .team-2 { background: #f3c76d; }
+      .team-3 { background: #9ec7ff; }
+      .team-4 { background: #ffaecf; }
+      .team-5 { background: #7fe7ce; }
+      .team-6 { background: #ff9e63; }
+      .team-7 { background: #e5c2ff; }
+      .team-8 { background: #86d3ff; }
+      .team-9 { background: #b7d15d; }
+      .team-10 { background: #ffd65a; }
+      .team-11 { background: #ff9b9b; }
+      .team-12 { background: #8fe8a6; }
+      .team-13 { background: #c9d8ff; }
+      .team-14 { background: #f0b7ff; }
+      .team-15 { background: #8ad7d5; }
+      .team-16 { background: #ffca72; }
+      .team-17 { background: #b2c6ff; }
+      .team-18 { background: #92d986; }
+      .team-19 { background: #ffba93; }
+      .team-20 { background: #d8d5ff; }
+      @media (max-width: 900px) {
+        .team-hero { grid-template-columns: 1fr; }
+        .panel { grid-template-columns: 1fr; }
+        nav { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container nav">
+        <div class="brand">
+          <span class="brand-mark">⚽</span>
+          <span>Football Tracker</span>
+        </div>
+        <nav>
+          <a href="index.html">Home</a>
+          <a href="teams.html">Teams</a>
+          <a href="index.html#fixtures">Fixtures</a>
+          <a href="index.html#results">Results</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container page">
+      <div id="team-page"></div>
+    </main>
+
+    <script>
+      const teams = [
+        { name: "Manchester City", badge: "M", pts: 62, played: 27, wins: 19, draws: 5, losses: 3, gf: 58, ga: 30, gd: 28, manager: "Pep Guardiola", stadium: "Etihad Stadium", form: ["W","W","D","W","L"] },
+        { name: "Arsenal", badge: "A", pts: 58, played: 27, wins: 18, draws: 4, losses: 5, gf: 55, ga: 22, gd: 33, manager: "Mikel Arteta", stadium: "Emirates Stadium", form: ["W","W","D","W","L"] },
+        { name: "Liverpool", badge: "L", pts: 55, played: 27, wins: 17, draws: 4, losses: 6, gf: 50, ga: 26, gd: 24, manager: "Arne Slot", stadium: "Anfield", form: ["W","W","L","W","D"] },
+        { name: "Chelsea", badge: "C", pts: 49, played: 27, wins: 14, draws: 7, losses: 6, gf: 46, ga: 28, gd: 18, manager: "Enzo Maresca", stadium: "Stamford Bridge", form: ["W","D","W","L","W"] },
+        { name: "Tottenham", badge: "T", pts: 46, played: 27, wins: 14, draws: 4, losses: 9, gf: 42, ga: 33, gd: 9, manager: "Ange Postecoglou", stadium: "Tottenham Hotspur Stadium", form: ["W","L","W","D","W"] },
+        { name: "Newcastle", badge: "N", pts: 42, played: 27, wins: 12, draws: 6, losses: 9, gf: 41, ga: 30, gd: 11, manager: "Eddie Howe", stadium: "St James' Park", form: ["W","D","W","L","W"] },
+        { name: "Manchester United", badge: "U", pts: 39, played: 27, wins: 11, draws: 6, losses: 10, gf: 35, ga: 36, gd: -1, manager: "Ruben Amorim", stadium: "Old Trafford", form: ["L","W","D","W","L"] },
+        { name: "Aston Villa", badge: "V", pts: 37, played: 27, wins: 10, draws: 7, losses: 10, gf: 36, ga: 39, gd: -3, manager: "Unai Emery", stadium: "Villa Park", form: ["L","W","D","W","L"] },
+        { name: "Brighton", badge: "B", pts: 35, played: 27, wins: 9, draws: 8, losses: 10, gf: 31, ga: 37, gd: -6, manager: "Fabian Hurzeler", stadium: "Amex Stadium", form: ["D","L","W","D","W"] },
+        { name: "West Ham", badge: "W", pts: 33, played: 27, wins: 9, draws: 6, losses: 12, gf: 27, ga: 35, gd: -8, manager: "Julen Lopetegui", stadium: "London Stadium", form: ["D","W","L","W","D"] },
+        { name: "Leicester City", badge: "LC", pts: 32, played: 27, wins: 8, draws: 8, losses: 11, gf: 30, ga: 39, gd: -9, manager: "Steve Cooper", stadium: "King Power Stadium", form: ["D","L","W","D","W"] },
+        { name: "Everton", badge: "E", pts: 31, played: 27, wins: 8, draws: 7, losses: 12, gf: 29, ga: 40, gd: -11, manager: "David Moyes", stadium: "Goodison Park", form: ["L","W","D","W","L"] },
+        { name: "Crystal Palace", badge: "P", pts: 30, played: 27, wins: 8, draws: 6, losses: 13, gf: 26, ga: 35, gd: -9, manager: "Oliver Glasner", stadium: "Selhurst Park", form: ["L","W","D","L","W"] },
+        { name: "Fulham", badge: "F", pts: 30, played: 27, wins: 7, draws: 9, losses: 11, gf: 27, ga: 33, gd: -6, manager: "Marco Silva", stadium: "Craven Cottage", form: ["W","D","L","D","W"] },
+        { name: "Bournemouth", badge: "BO", pts: 29, played: 27, wins: 7, draws: 8, losses: 12, gf: 25, ga: 38, gd: -13, manager: "Andoni Iraola", stadium: "Vitality Stadium", form: ["L","D","W","D","L"] },
+        { name: "Wolves", badge: "WO", pts: 28, played: 27, wins: 7, draws: 7, losses: 13, gf: 24, ga: 41, gd: -17, manager: "Gary O'Neil", stadium: "Molineux Stadium", form: ["D","L","W","L","W"] },
+        { name: "Southampton", badge: "S", pts: 26, played: 27, wins: 6, draws: 8, losses: 13, gf: 23, ga: 44, gd: -21, manager: "Russell Martin", stadium: "St Mary's", form: ["L","D","W","L","D"] },
+        { name: "Ipswich Town", badge: "I", pts: 25, played: 27, wins: 6, draws: 7, losses: 14, gf: 22, ga: 45, gd: -23, manager: "Kieran McKenna", stadium: "Portman Road", form: ["L","D","L","W","L"] },
+        { name: "Nottingham Forest", badge: "NF", pts: 25, played: 27, wins: 6, draws: 7, losses: 14, gf: 27, ga: 43, gd: -16, manager: "Nuno Espírito Santo", stadium: "City Ground", form: ["L","W","D","L","W"] },
+        { name: "Leeds United", badge: "LE", pts: 24, played: 27, wins: 5, draws: 9, losses: 13, gf: 24, ga: 42, gd: -18, manager: "Daniel Farke", stadium: "Elland Road", form: ["D","L","D","W","L"] }
+      ];
+
+      const squad = {
+        "Manchester City": ["Ederson", "Walker", "Dias", "Gvardiol", "Cancelo", "Rodri", "De Bruyne", "Foden", "Haaland", "Bernardo", "Doku"],
+        "Arsenal": ["Raya", "Saliba", "Gabriel", "White", "Tierney", "Rice", "Ødegaard", "Saka", "Jesus", "Martinelli", "Trossard"],
+        "Liverpool": ["Alisson", "Alexander-Arnold", "Van Dijk", "Konate", "Robertson", "Szoboszlai", "Mac Allister", "Gakpo", "Salah", "Diaz", "Nunez"],
+        "Chelsea": ["Petrovic", "James", "Disasi", "Colwill", "Chukwuemeka", "Caicedo", "Enzo", "Sterling", "Jackson", "Palmer", "Mudryk"],
+        "Tottenham": ["Vicario", "Pedro Porro", "Romero", "van de Ven", "Udogie", "Bissouma", "Sarr", "Johnson", "Son", "Richarlison", "Kulusevski"],
+        "Newcastle": ["Pope", "Trippier", "Botman", "Burn", "Targett", "Guimaraes", "Longstaff", "Isak", "Wilson", "Murphy", "Almiron"],
+        "Manchester United": ["Onana", "Mazraoui", "Varane", "Martins", "Shaw", "Casemiro", "Mainoo", "Amad", "Rashford", "Hojlund", "Fernandes"],
+        "Aston Villa": ["Martinez", "Cash", "Pau", "Mings", "Young", "Douglas Luiz", "Tielemans", "McGinn", "Watkins", "Bailey", "Rogers"],
+        "Brighton": ["Verbruggen", "Lamptey", "Van Hecke", "Webster", "Estupinan", "Baleba", "Milner", "Gross", "Mitoma", "Joao Pedro", "Enciso"],
+        "West Ham": ["Areola", "Wan-Bissaka", "Tarkowski", "Cresswell", "Coufal", "Soucek", "Paqueta", "Bowen", "Antonio", "Summerville", "Ings"],
+        "Leicester City": ["Stolarczyk", "Justin", "Faes", "Vestergaard", "Thomas", "Ndidi", "Boubakary", "Dewsbury-Hall", "Vardy", "Mavididi", "Fatawu"],
+        "Everton": ["Pickford", "Coleman", "Branthwaite", "Mina", "Mykolenko", "Gueye", "Onana", "McNeil", "Calvert-Lewin", "Gray", "Beto"],
+        "Crystal Palace": ["Henderson", "Clyne", "Andersen", "Guaita", "Mitchell", "Eze", "Wharton", "Ayew", "Mateta", "Olise", "Edouard"],
+        "Fulham": ["Leno", "Tete", "Bassey", "Ream", "Robinson", "Lukic", "Andreas", "Irvine", "Willian", "Jimenez", "Muniz"],
+        "Bournemouth": ["Neto", "Smith", "Dawson", "Kelly", "Zabarnyi", "Cook", "Christie", "Kluivert", "Solanke", "Semenyo", "Semenyo"],
+        "Wolves": ["Sa", "Nélson Semedo", "Kilman", "Santos", "Ait-Nouri", "Bobb", "Moutinho", "Hwang", "Jimenez", "Cunha", "Bellegarde"],
+        "Southampton": ["Bazunu", "Walker-Peters", "Bednarek", "Harwood-Bellis", "Larios", "Sulemana", "Downes", "Aribo", "Adams", "Long", "Broja"],
+        "Ipswich Town": ["Muric", "Tuanzebe", "Woolfenden", "Greaves", "Burgess", "Morsy", "Taylor", "Brodie", "Hutchinson", "Chaplin", "Delap"],
+        "Nottingham Forest": ["Sels", "Aina", "Boly", "Murillo", "Toffolo", "Yates", "Anderson", "Elanga", "Wood", "Hudson-Odoi", "Awoniyi"],
+        "Leeds United": ["Meslier", "Bogle", "Ampadu", "Rodon", "Firpo", "Gruev", "Aaronson", "Rutter", "Piroe", "Summerville", "Gnonto"]
+      };
+
+      const teamName = new URLSearchParams(window.location.search).get("team") || "Manchester City";
+      const team = teams.find((entry) => entry.name === teamName) || teams[0];
+      const teamBadgeClass = `team-${(teams.findIndex((entry) => entry.name === team.name) % 20) + 1}`;
+      const page = document.getElementById("team-page");
+
+      page.innerHTML = `
+        <section class="team-hero">
+          <div class="team-badge ${teamBadgeClass}">${team.badge}</div>
+          <div class="team-meta">
+            <p style="color: var(--green); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;">Club profile</p>
+            <h1>${team.name}</h1>
+            <p>Manager: ${team.manager}</p>
+            <p>Stadium: ${team.stadium}</p>
+          </div>
+          <div class="team-stats">
+            <div class="mini-card">
+              <span>Points</span>
+              <strong>${team.pts}</strong>
+            </div>
+            <div class="mini-card">
+              <span>Goal Difference</span>
+              <strong>${team.gd > 0 ? "+" : ""}${team.gd}</strong>
+            </div>
+            <div class="mini-card">
+              <span>Played</span>
+              <strong>${team.played}</strong>
+            </div>
+          </div>
+        </section>
+
+        <div class="panel">
+          <section class="box">
+            <h2>Squad</h2>
+            <ul class="squad-list">
+              ${(squad[team.name] || ["Player 1", "Player 2", "Player 3"]).map((player, index) => `
+                <li>
+                  <span>${index + 1}. ${player}</span>
+                  <small>Starter</small>
+                </li>
+              `).join("")}
+            </ul>
+          </section>
+
+          <section class="box">
+            <h2>Recent form</h2>
+            <div class="form">
+              ${(team.form || ["W","W","D","L","W"]).map((result) => {
+                const className = result === "W" ? "win" : result === "D" ? "draw" : "loss";
+                return `<span class="result-pill ${className}">${result}</span>`;
+              }).join("")}
+            </div>
+            <div style="margin-top: 18px;">
+              <div class="mini-card">
+                <span>Record</span>
+                <strong>${team.wins}W - ${team.draws}D - ${team.losses}L</strong>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <a class="back-link" href="teams.html">← Back to teams</a>
+      `;
+    </script>
+  </body>
+</html>
