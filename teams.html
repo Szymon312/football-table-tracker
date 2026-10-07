@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teams | Football Tracker</title>
+    <style>
+      :root {
+        --bg: #07130f;
+        --text: #ebf7f1;
+        --muted: #a7c0b3;
+        --green: #2ddf7a;
+        --green-strong: #17b95c;
+        --border: rgba(145, 181, 166, 0.18);
+        --shadow: 0 18px 45px rgba(2, 10, 8, 0.35);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Inter", Arial, sans-serif;
+        background: radial-gradient(circle at top, rgba(34, 162, 88, 0.18), transparent 25%), linear-gradient(180deg, #07130f 0%, #07150f 100%);
+        color: var(--text);
+      }
+      a { color: inherit; text-decoration: none; }
+      .container { width: min(1200px, calc(100% - 32px)); margin: 0 auto; }
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        background: rgba(7, 19, 15, 0.72);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 76px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 700;
+      }
+      .brand-mark {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        background: linear-gradient(180deg, #39e47f, #1f9b57);
+        color: #06150d;
+      }
+      nav {
+        display: flex;
+        gap: 26px;
+        color: var(--muted);
+      }
+      .header-box {
+        padding: 54px 0 36px;
+      }
+      .header-box h1 {
+        margin: 0 0 12px;
+        font-size: clamp(2.3rem, 5vw, 4rem);
+      }
+      .header-box p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 1.08rem;
+      }
+      .teams-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+        padding-bottom: 50px;
+      }
+      .team-card {
+        background: rgba(13, 32, 25, 0.92);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: var(--shadow);
+        transition: transform 0.2s ease, border-color 0.2s ease;
+      }
+      .team-card:hover {
+        transform: translateY(-2px);
+        border-color: rgba(45, 223, 122, 0.4);
+      }
+      .team-card-top {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+      .team-logo {
+        width: 46px;
+        height: 46px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+        color: #06150d;
+      }
+      .team-card h3 {
+        margin: 0;
+        font-size: 1.2rem;
+      }
+      .team-meta {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        color: var(--muted);
+        font-size: 0.82rem;
+        margin-top: 8px;
+      }
+      .team-card .btn {
+        display: inline-block;
+        margin-top: 18px;
+        padding: 0.7rem 1rem;
+        border-radius: 10px;
+        background: rgba(45, 223, 122, 0.1);
+        border: 1px solid rgba(45, 223, 122, 0.35);
+        color: var(--green);
+        font-weight: 700;
+      }
+      .team-1 { background: #d0d6de; }
+      .team-2 { background: #f3c76d; }
+      .team-3 { background: #9ec7ff; }
+      .team-4 { background: #ffaecf; }
+      .team-5 { background: #7fe7ce; }
+      .team-6 { background: #ff9e63; }
+      .team-7 { background: #e5c2ff; }
+      .team-8 { background: #86d3ff; }
+      .team-9 { background: #b7d15d; }
+      .team-10 { background: #ffd65a; }
+      .team-11 { background: #ff9b9b; }
+      .team-12 { background: #8fe8a6; }
+      .team-13 { background: #c9d8ff; }
+      .team-14 { background: #f0b7ff; }
+      .team-15 { background: #8ad7d5; }
+      .team-16 { background: #ffca72; }
+      .team-17 { background: #b2c6ff; }
+      .team-18 { background: #92d986; }
+      .team-19 { background: #ffba93; }
+      .team-20 { background: #d8d5ff; }
+      @media (max-width: 700px) {
+        nav { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container nav">
+        <div class="brand">
+          <span class="brand-mark">⚽</span>
+          <span>Football Tracker</span>
+        </div>
+        <nav>
+          <a href="index.html">Home</a>
+          <a href="index.html#table">Table</a>
+          <a href="index.html#fixtures">Fixtures</a>
+          <a href="index.html#results">Results</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="header-box">
+        <p class="eyebrow" style="margin: 0 0 10px; color: var(--green); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700;">Teams</p>
+        <h1>League clubs</h1>
+        <p>Explore every club in the competition and view their full team profile.</p>
+      </div>
+
+      <section id="teams-grid" class="teams-grid"></section>
+    </main>
+
+    <script>
+      const teams = [
+        { name: "Manchester City", pts: 62, played: 27, badge: "M" },
+        { name: "Arsenal", pts: 58, played: 27, badge: "A" },
+        { name: "Liverpool", pts: 55, played: 27, badge: "L" },
+        { name: "Chelsea", pts: 49, played: 27, badge: "C" },
+        { name: "Tottenham", pts: 46, played: 27, badge: "T" },
+        { name: "Newcastle", pts: 42, played: 27, badge: "N" },
+        { name: "Manchester United", pts: 39, played: 27, badge: "U" },
+        { name: "Aston Villa", pts: 37, played: 27, badge: "V" },
+        { name: "Brighton", pts: 35, played: 27, badge: "B" },
+        { name: "West Ham", pts: 33, played: 27, badge: "W" },
+        { name: "Leicester City", pts: 32, played: 27, badge: "LC" },
+        { name: "Everton", pts: 31, played: 27, badge: "E" },
+        { name: "Crystal Palace", pts: 30, played: 27, badge: "P" },
+        { name: "Fulham", pts: 30, played: 27, badge: "F" },
+        { name: "Bournemouth", pts: 29, played: 27, badge: "BO" },
+        { name: "Wolves", pts: 28, played: 27, badge: "WO" },
+        { name: "Southampton", pts: 26, played: 27, badge: "S" },
+        { name: "Ipswich Town", pts: 25, played: 27, badge: "I" },
+        { name: "Nottingham Forest", pts: 25, played: 27, badge: "NF" },
+        { name: "Leeds United", pts: 24, played: 27, badge: "LE" }
+      ];
+
+      function getBadgeClass(name) {
+        const index = teams.findIndex((team) => team.name === name);
+        return `team-${(index % 20) + 1}`;
+      }
+
+      const grid = document.getElementById("teams-grid");
+      grid.innerHTML = teams.map((team) => `
+        <article class="team-card">
+          <div class="team-card-top">
+            <div class="team-logo ${getBadgeClass(team.name)}">${team.badge}</div>
+            <h3>${team.name}</h3>
+          </div>
+          <div class="team-meta">
+            <span>Played</span>
+            <strong>${team.played}</strong>
+          </div>
+          <div class="team-meta">
+            <span>Points</span>
+            <strong>${team.pts}</strong>
+          </div>
+          <a class="btn" href="team.html?team=${encodeURIComponent(team.name)}">View team</a>
+        </article>
+      `).join("");
+    </script>
+  </body>
+</html>
